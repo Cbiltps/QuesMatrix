@@ -16,9 +16,9 @@ import java.util.List;
 public class ScoringStrategyExecutor {
 
     // 策略列表
+    // 这里能直接注入是因为在@ScoringStrategyConfig注解中打上了@Component注解
     @Resource
     private List<ScoringStrategy> scoringStrategyList;
-
 
     /**
      * 评分

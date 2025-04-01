@@ -3,10 +3,10 @@
 # @from
 
 -- 创建库
-create database if not exists quesmatrix;
+create database if not exists ques_matrix;
 
 -- 切换库
-use quesmatrix;
+use ques_matrix;
 
 -- 用户表
 create table if not exists user

@@ -2,13 +2,13 @@
 # @author 
 # @from 
 server:
-  port: 8124
+  port: 8101
 spring:
   # 数据库配置
   # todo 需替换配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/quesmatrix
+    url: jdbc:mysql://localhost:3306/ques_matrix
     username: root
     password: 123456
   # Redis 配置

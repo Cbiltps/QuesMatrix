@@ -6,7 +6,7 @@ spring:
     name: quesmatrix-backend
   # 默认 dev 环境
   profiles:
-    active: dev
+    active:
   # 支持 swagger3
   mvc:
     pathmatch:
@@ -21,7 +21,7 @@ spring:
   # todo 需替换配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/quesmatrix
+    url: jdbc:mysql://localhost:3306/ques_matrix
     username: root
     password: 123123123
   # Redis 配置

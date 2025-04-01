@@ -2,7 +2,7 @@
 # @author 
 # @from 
 server:
-  port: 8124
+  port: 8101
 spring:
   # 数据库配置
   # todo 需替换配置
