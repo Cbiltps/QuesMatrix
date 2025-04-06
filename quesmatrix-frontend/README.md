@@ -1,4 +1,4 @@
-# yudada-frontend
+# quesmatrix-frontend
 
 ## Project setup
 ```
