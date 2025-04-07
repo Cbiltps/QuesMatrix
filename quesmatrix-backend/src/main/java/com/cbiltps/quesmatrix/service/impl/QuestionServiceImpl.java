@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cbiltps.quesmatrix.common.ErrorCode;
 import com.cbiltps.quesmatrix.constant.CommonConstant;
+import com.cbiltps.quesmatrix.exception.BusinessException;
 import com.cbiltps.quesmatrix.exception.ThrowUtils;
 import com.cbiltps.quesmatrix.mapper.QuestionMapper;
 import com.cbiltps.quesmatrix.model.dto.question.QuestionQueryRequest;
@@ -175,4 +176,24 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         return questionVOPage;
     }
 
+    /**
+     * 将AI返回结果转换为标准JSON数组
+     * @param input
+     * @return
+     */
+    public String convertToStandardJsonArray(String input) {
+        // 截取需要的 JSON 信息
+        int start = input.indexOf("[");
+        int end = input.lastIndexOf("]");
+        String contentJson = input.substring(start, end + 1);
+
+        // 去除字符串中的转义字符
+        String cleanedInput = contentJson.replace("\\n", "").replace("\\\"", "\"");
+
+        // 确保字符串以 '[' 开头并以 ']' 结尾
+        if (!cleanedInput.startsWith("[") || !cleanedInput.endsWith("]")) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "字符串数组格式不正确");
+        }
+        return cleanedInput;
+    }
 }

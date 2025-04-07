@@ -50,4 +50,11 @@ public interface QuestionService extends IService<Question> {
      * @return
      */
     Page<QuestionVO> getQuestionVOPage(Page<Question> questionPage, HttpServletRequest request);
+
+    /**
+     * 将AI返回结果转换为标准json数组
+     * @param input
+     * @return
+     */
+    String convertToStandardJsonArray(String input);
 }

@@ -10,10 +10,14 @@ import com.cbiltps.quesmatrix.common.ResultUtils;
 import com.cbiltps.quesmatrix.constant.UserConstant;
 import com.cbiltps.quesmatrix.exception.BusinessException;
 import com.cbiltps.quesmatrix.exception.ThrowUtils;
+import com.cbiltps.quesmatrix.manager.AiManager;
 import com.cbiltps.quesmatrix.model.dto.question.*;
+import com.cbiltps.quesmatrix.model.entity.App;
 import com.cbiltps.quesmatrix.model.entity.Question;
 import com.cbiltps.quesmatrix.model.entity.User;
+import com.cbiltps.quesmatrix.model.enums.AppTypeEnum;
 import com.cbiltps.quesmatrix.model.vo.QuestionVO;
+import com.cbiltps.quesmatrix.service.AppService;
 import com.cbiltps.quesmatrix.service.QuestionService;
 import com.cbiltps.quesmatrix.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,11 +28,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+import static com.cbiltps.quesmatrix.constant.AIConstant.GENERATE_QUESTION_SYSTEM_MESSAGE;
+
 /**
  * 题目接口
  *
- * @author 
- * @from 
+ * @author
+ * @from
  */
 @RestController
 @RequestMapping("/question")
@@ -40,6 +46,12 @@ public class QuestionController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private AiManager aiManager;
+
+    @Resource
+    private AppService appService;
 
     // region 增删改查
 
@@ -241,4 +253,48 @@ public class QuestionController {
     }
 
     // endregion
+
+    // endregion
+
+    // region AI 生成题目功能
+    /**
+     * 生成题目的用户消息
+     *
+     * @param app
+     * @param questionNumber
+     * @param optionNumber
+     * @return
+     */
+    private String getGenerateQuestionUserMessage(App app, int questionNumber, int optionNumber) {
+        StringBuilder userMessage = new StringBuilder();
+        userMessage.append(app.getAppName()).append("，" +"\n" + "【【【");
+        userMessage.append(app.getAppDesc()).append("】】】，" +"\n");
+        userMessage.append(AppTypeEnum.getEnumByValue(app.getAppType()).getText()).append("，" +"\n");
+        userMessage.append(questionNumber).append("，" +"\n");
+        userMessage.append(optionNumber);
+        System.out.println(userMessage.toString());
+        return userMessage.toString();
+    }
+
+    @PostMapping("/ai_generate")
+    public BaseResponse<List<QuestionContentDTO>> aiGenerateQuestion(@RequestBody AiGenerateQuestionRequest aiGenerateQuestionRequest) {
+        ThrowUtils.throwIf(aiGenerateQuestionRequest == null, ErrorCode.PARAMS_ERROR);
+        // 获取参数
+        Long appId = aiGenerateQuestionRequest.getAppId();
+        int questionNumber = aiGenerateQuestionRequest.getQuestionNumber();
+        int optionNumber = aiGenerateQuestionRequest.getOptionNumber();
+        // 获取应用信息
+        App app = appService.getById(appId);
+        ThrowUtils.throwIf(app == null, ErrorCode.NOT_FOUND_ERROR);
+        // 封装 Prompt
+        String userMessage = getGenerateQuestionUserMessage(app, questionNumber, optionNumber);
+        // AI 生成
+        String result = aiManager.doSyncRequest(GENERATE_QUESTION_SYSTEM_MESSAGE, userMessage, null);
+        String standardJson = questionService.convertToStandardJsonArray(result);
+        List<QuestionContentDTO> questionContentDTOList = JSONUtil.toList(standardJson, QuestionContentDTO.class);
+        return ResultUtils.success(questionContentDTOList);
+    }
+
+    // endregion
 }
+
