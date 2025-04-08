@@ -76,4 +76,4 @@ knife4j:
           - com.cbiltps.quesmatrix.controller
 # AI 配置
 ai:
-  apiKey: 30a3d3c2621d4a71a3a20afa04b6b07c.yK8FiB5fWuAsBUce
+  apiKey: xxx

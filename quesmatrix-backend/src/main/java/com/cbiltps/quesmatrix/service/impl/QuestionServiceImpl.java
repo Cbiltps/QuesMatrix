@@ -1,6 +1,8 @@
 package com.cbiltps.quesmatrix.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -177,11 +179,11 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     }
 
     /**
-     * 将AI返回结果转换为标准JSON数组
+     * 将AI生成题目的返回结果转换为标准JSON数组
      * @param input
      * @return
      */
-    public String convertToStandardJsonArray(String input) {
+    public String convertAiQuestionsToStandardJsonArray(String input) {
         // 截取需要的 JSON 信息
         int start = input.indexOf("[");
         int end = input.lastIndexOf("]");
@@ -195,5 +197,17 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "字符串数组格式不正确");
         }
         return cleanedInput;
+    }
+
+    @Override
+    public String convertAiScoreToStandardJsonArray(String result) {
+        // 截取需要的 JSON 信息
+        JSONObject inputObject = JSONUtil.parseObj(result);
+        String content = inputObject.getJSONObject("message").getStr("content");
+
+        // 去除字符串中的转义字符
+        content = content.replace("```json\n", "").replace("```\n", "");
+        JSONObject contentObject = JSONUtil.parseObj(content);
+        return contentObject.toStringPretty();
     }
 }

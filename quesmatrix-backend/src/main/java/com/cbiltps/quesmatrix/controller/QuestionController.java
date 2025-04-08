@@ -254,7 +254,6 @@ public class QuestionController {
 
     // endregion
 
-    // endregion
 
     // region AI 生成题目功能
     /**
@@ -289,8 +288,8 @@ public class QuestionController {
         // 封装 Prompt
         String userMessage = getGenerateQuestionUserMessage(app, questionNumber, optionNumber);
         // AI 生成
-        String result = aiManager.doSyncRequest(GENERATE_QUESTION_SYSTEM_MESSAGE, userMessage, null);
-        String standardJson = questionService.convertToStandardJsonArray(result);
+        String result = aiManager.doSyncStableRequest(GENERATE_QUESTION_SYSTEM_MESSAGE, userMessage);
+        String standardJson = questionService.convertAiQuestionsToStandardJsonArray(result);
         List<QuestionContentDTO> questionContentDTOList = JSONUtil.toList(standardJson, QuestionContentDTO.class);
         return ResultUtils.success(questionContentDTOList);
     }
