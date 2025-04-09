@@ -56,7 +56,7 @@ public interface QuestionService extends IService<Question> {
      * @param input
      * @return
      */
-    String convertAiQuestionsToStandardJsonArray(String input);
+    String convertAiQuestionsToJsonArray(String input);
 
-    String convertAiScoreToStandardJsonArray(String result);
+    String convertAiScoreToJsonArray(String result);
 }

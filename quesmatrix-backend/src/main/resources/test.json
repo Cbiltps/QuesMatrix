@@ -1,0 +1,21 @@
+{
+  "finish_reason": "stop",
+  "index": 0,
+  "message": {
+    "content": "```json\n[\n    {\n        \"options\": [\n            {\"value\": \"INTJ\", \"key\": \"A\"},\n            {\"value\": \"ESFP\", \"key\": \"B\"}\n        ],\n        \"title\": \"你的性格更偏向于哪种类型？\"\n    },\n    {\n        \"options\": [\n            {\"value\": \"INFJ\", \"key\": \"A\"},\n            {\"value\": \"ESTP\", \"key\": \"B\"}\n        ],\n        \"title\": \"你通常是如何处理问题的？\"\n    }\n]\n```",
+    "role": "assistant"
+  },
+  "delta": null
+}
+
+
+
+{
+  "finish_reason": "stop",
+  "index": 0,
+  "message": {
+    "content": "```json\n{\n  \"resultName\": \"ISFP 性格倾向\",\n  \"resultDesc\": \"根据您在MBTI性格测试中的回答，您表现出ISFP性格类型的倾向。ISFP（内倾、感觉、情感、知觉）类型的人通常被称为“冒险家”或“艺术家”。您在社交方式上偏好内向（B），依赖感觉（A）来感知世界，决策时更倾向于情感（B），并且喜欢随性（B）的生活方式。这些特点表明您是一个敏感、好奇且注重个人价值观的人。您可能喜欢探索新事物，享受当下的体验，而不太喜欢过于固定的计划。您在处理问题时更倾向于依赖个人的感受和直觉，而不是逻辑分析。这种性格类型的人通常非常忠诚，善于倾听，并且具有很强的审美感。建议您在未来的生活和工作中，充分发挥您的这些优势，同时注意在需要时适当运用逻辑和分析能力，以实现更全面的个人发展。\"\n}\n```",
+    "role": "assistant"
+  },
+  "delta": null
+}

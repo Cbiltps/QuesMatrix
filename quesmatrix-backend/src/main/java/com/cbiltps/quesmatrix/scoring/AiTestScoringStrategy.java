@@ -51,8 +51,9 @@ public class AiTestScoringStrategy implements ScoringStrategy {
         String userMessage = getAiTestScoringUserMessage(app, questionContent, choices);
         // AI 生成
         String result = aiManager.doSyncStableRequest(AI_TEST_SCORING_SYSTEM_MESSAGE, userMessage);
-        // AI返回的评分数据转换成标准json数组
-        String standardJson = questionService.convertAiScoreToStandardJsonArray(result);
+        System.out.println(result);
+        // AI 返回的评分数据转换成标准json数组
+        String standardJson = questionService.convertAiScoreToJsonArray(result);
         // 3. 构造返回值，填充答案对象的属性
         UserAnswer userAnswer = JSONUtil.toBean(standardJson, UserAnswer.class);
         userAnswer.setAppId(appId);

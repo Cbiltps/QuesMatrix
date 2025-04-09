@@ -178,36 +178,16 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         return questionVOPage;
     }
 
-    /**
-     * 将AI生成题目的返回结果转换为标准JSON数组
-     * @param input
-     * @return
-     */
-    public String convertAiQuestionsToStandardJsonArray(String input) {
-        // 截取需要的 JSON 信息
+    public String convertAiQuestionsToJsonArray(String input) {
         int start = input.indexOf("[");
         int end = input.lastIndexOf("]");
-        String contentJson = input.substring(start, end + 1);
-
-        // 去除字符串中的转义字符
-        String cleanedInput = contentJson.replace("\\n", "").replace("\\\"", "\"");
-
-        // 确保字符串以 '[' 开头并以 ']' 结尾
-        if (!cleanedInput.startsWith("[") || !cleanedInput.endsWith("]")) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "字符串数组格式不正确");
-        }
-        return cleanedInput;
+        return input.substring(start, end + 1);
     }
 
     @Override
-    public String convertAiScoreToStandardJsonArray(String result) {
-        // 截取需要的 JSON 信息
-        JSONObject inputObject = JSONUtil.parseObj(result);
-        String content = inputObject.getJSONObject("message").getStr("content");
-
-        // 去除字符串中的转义字符
-        content = content.replace("```json\n", "").replace("```\n", "");
-        JSONObject contentObject = JSONUtil.parseObj(content);
-        return contentObject.toStringPretty();
+    public String convertAiScoreToJsonArray(String input) {
+        int start = input.indexOf("{");
+        int end = input.lastIndexOf("}");
+        return input.substring(start, end + 1);
     }
 }
