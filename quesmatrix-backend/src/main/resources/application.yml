@@ -47,6 +47,7 @@ spring:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
         jdbc-url: jdbc:mysql://localhost:3306/ques_matrix
+#        ?allowPublicKeyRetrieval=true&useSSL=false&autoReconnect=true&characterEncoding=utf8
         username: root
         password: 123123123
     # 规则配置

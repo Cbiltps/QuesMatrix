@@ -80,7 +80,7 @@ public class AiTestScoringStrategy implements ScoringStrategy {
         try {
             // 竞争锁
             boolean isLocked = lock.tryLock(3, 15, TimeUnit.SECONDS);
-            if (isLocked) {
+            if (!isLocked) {
                 return null; // 没抢到锁, 直接返回
             }
             // 强到锁, 执行后续业务逻辑
@@ -96,7 +96,6 @@ public class AiTestScoringStrategy implements ScoringStrategy {
             String userMessage = getAiTestScoringUserMessage(app, questionContent, choices);
             // AI 生成
             String result = aiManager.doSyncStableRequest(AI_TEST_SCORING_SYSTEM_MESSAGE, userMessage);
-            System.out.println(result);
             // AI 返回的评分数据转换成标准json数组
             String standardJson = questionService.convertAiScoreToJsonArray(result);
             // 缓存结果
@@ -107,6 +106,7 @@ public class AiTestScoringStrategy implements ScoringStrategy {
             userAnswer.setAppType(app.getAppType());
             userAnswer.setScoringStrategy(app.getScoringStrategy());
             userAnswer.setChoices(JSONUtil.toJsonStr(choices));
+            System.out.println(userAnswer);
             return userAnswer;
         } finally {
             if (lock == null && lock.isLocked()) {
@@ -118,7 +118,7 @@ public class AiTestScoringStrategy implements ScoringStrategy {
                  * 同时A超时后释放锁, 但A释放锁释放的是B持有的锁, 导致B持有的锁被释放.
                  * 但是B的业务没执行完, C又抢到锁了
                  */
-                if (lock.isHeldByCurrentThread()) { //
+                if (lock.isHeldByCurrentThread()) {
                     lock.unlock();
                 }
             }
