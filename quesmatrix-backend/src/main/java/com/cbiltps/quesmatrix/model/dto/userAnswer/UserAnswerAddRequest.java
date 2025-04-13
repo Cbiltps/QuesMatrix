@@ -1,7 +1,5 @@
 package com.cbiltps.quesmatrix.model.dto.userAnswer;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -15,6 +13,11 @@ import java.util.List;
  */
 @Data
 public class UserAnswerAddRequest implements Serializable {
+
+    /**
+     * 用户答案 id 用于保证提交答案的幂等性
+     */
+    private Long id;
 
     /**
      * 应用 id
