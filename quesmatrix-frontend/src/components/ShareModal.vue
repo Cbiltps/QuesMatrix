@@ -12,7 +12,6 @@
 
 <script setup lang="ts">
 import { defineExpose, defineProps, ref, withDefaults } from "vue";
-// @ts-ignore
 import QRCode from "qrcode";
 import message from "@arco-design/web-vue/es/message";
 
@@ -30,7 +29,7 @@ interface Props {
  * 给组件指定初始值
  */
 const props = withDefaults(defineProps<Props>(), {
-  link: () => "https://laoyujianli.com/share/yupi",
+  link: () => "",
   title: () => "分享",
 });
 

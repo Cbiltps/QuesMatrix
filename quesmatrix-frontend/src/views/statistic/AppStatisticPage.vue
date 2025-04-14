@@ -10,7 +10,7 @@
         button-text="搜索"
         size="large"
         search-button
-        @search="(value) => loadAppAnswerResultCountData(value)"
+        @search="(value: any) => loadAppAnswerResultCountData(value)"
       />
     </div>
     <div style="margin-bottom: 16px" />
