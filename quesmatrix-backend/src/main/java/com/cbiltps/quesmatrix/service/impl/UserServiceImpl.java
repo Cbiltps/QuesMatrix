@@ -117,6 +117,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public User getLoginUser(HttpServletRequest request) {
         // 先判断是否已登录
+
+//        String authorization = request.getHeader("Authorization");
+//        String[] parts = authorization.split("=");
+//        String sessionId = parts[1];
+//        System.out.println(sessionId);
+//
+//        Object userObj = sessionId;
+
         Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
         User currentUser = (User) userObj;
         if (currentUser == null || currentUser.getId() == null) {

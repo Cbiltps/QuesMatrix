@@ -31,7 +31,7 @@ spring:
     host: localhost
     port: 6379
     timeout: 5000
-#    password: 123456
+#    password:
   # 文件上传
   servlet:
     multipart:
@@ -107,4 +107,4 @@ knife4j:
           - com.cbiltps.quesmatrix.controller
 # AI 配置
 ai:
-  apiKey: 6e65ac5e60c341d9873b534cfdd9faad.1XATHfYOYS0bLmNJ
+  apiKey: 38f739b4dde8440486fab06d7b9aec7f.9FOvxqZYnfSGBv8B
